@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<title>Processamento de Áudio com Arduino Due</title>
+
+<meta name="description" content="Processamento de Áudio com Arduino Due">    
+
+  <meta name="author" content="Lucas Fialho Zawacki" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" href="revealjs/css/reveal.css">
+  <link rel="stylesheet" href="revealjs/css/theme/beige.css" id="theme">
+<link rel="stylesheet" href="revealjs/css/custom.css">
+
+<!-- For syntax highlighting -->
+  <link rel="stylesheet" href="revealjs/lib/css/zenburn.css">
+
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+  document.write( '<link rel="stylesheet" href="revealjs/css/print/' +
+    ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + 
+    '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+
+<section>
+<h1>Processamento de Áudio com Arduino Due</h1>
+<h3>Lucas Fialho Zawacki</h3>
+<p>
+<h4></h4>
+</p>
+</section>  
+
+
+<section id="jabá-matehackers" class="level1">
+<h1>Jabá Matehackers</h1>
+
+<figure>
+<img src="assets/images/logo.png" />
+</figure>
+<section id="hackers-espaço-hackerspace" class="level2">
+<h2><strong>Hackers + Espaço = Hackerspace</strong></h2>
+<p><a href="http://matehackers.org">http://matehackers.org</a></p>
+</section>
+</section>
+<section id="quem-sou" class="level1">
+<h1>Quem sou?</h1>
+<figure>
+<img src="assets/images/lucas.jpeg" />
+</figure>
+<ul>
+<li>Lucas Fialho Zawacki</li>
+<li>Ciêntista da Computação, <a href="https://matehackers.org">Matehackers</a>, <a href="https://mconf.com">Mconf</a></li>
+<li><a href="https://musical-artifacts.com">Musical Aritfacts</a>, <a href="https://ownlife.lfzawacki.com/">Ownlife Project</a></li>
+</ul>
+</section>
+<section id="o-que-queremos-fazer-aqui" class="level1">
+<h1>O que queremos fazer aqui?</h1>
+<ul>
+<li>Usar um Arduino Due como processador de sinais digitais</li>
+<li>Aprender como funciona áudio e áudio digital</li>
+<li>Fazer os nossos próprios efeitos de áudio baseados no som de uma guitarra</li>
+</ul>
+</section>
+<section id="o-que-queremos-fazer-aqui-cont." class="level1">
+<h1>O que queremos fazer aqui? (cont.)</h1>
+<figure>
+<img src="assets/images/zoom.jpg" alt="Zoomzera" /><figcaption>Zoomzera</figcaption>
+</figure>
+</section>
+<section id="processamento-de-sinais-digitais-dsp" class="level1">
+<h1>Processamento de Sinais Digitais (DSP)</h1>
+<ol type="1">
+<li>Fonte sonora</li>
+<li>Onda elétrica</li>
+<li>Conversão Analógico-Digital (ADC)</li>
+<li><strong>Código (manipulação digital dos dados)</strong></li>
+<li>Conversão Digital-Analógica (DAC)</li>
+<li>Saída de Som (caixas de som, fones-de-ouvido)</li>
+</ol>
+</section>
+<section id="diagrama-dsp" class="level1">
+<h1>Diagrama DSP</h1>
+<figure>
+<img src="assets/images/dsp.png" alt="Fonte: Wikipedia - Digital Audio" /><figcaption>Fonte: <a href="https://en.wikipedia.org/wiki/Digital_audio">Wikipedia - Digital Audio</a></figcaption>
+</figure>
+</section>
+<section id="como-funcionam-ondas-sonoras" class="level1">
+<h1>Como funcionam ondas sonoras</h1>
+<ul>
+<li>Váriação de pressão do ar</li>
+<li>Frequência da variação -&gt; &quot;Nota&quot;</li>
+<li>Amplitude -&gt; &quot;Volume&quot;</li>
+<li>Podemos converter ondas sonoras (mecânicas) em ondas eletricas</li>
+</ul>
+</section>
+<section id="ondas-sonoras" class="level1">
+<h1>Ondas Sonoras</h1>
+<figure>
+<img src="assets/images/seno.png" alt="Seno" /><figcaption>Seno</figcaption>
+</figure>
+<figure>
+<img src="assets/images/bateria.png" alt="Onda bateria" /><figcaption>Onda bateria</figcaption>
+</figure>
+</section>
+<section id="áudio-digital" class="level1">
+<h1>Áudio Digital</h1>
+<ul>
+<li>Representação numérica de uma frequência elétrica</li>
+<li>É feita como uma amostragem de partes da onda original...</li>
+<li>Virando uma sequência de números no tempo</li>
+</ul>
+<figure>
+<img src="assets/images/amostragem.png" alt="Amostragem" /><figcaption>Amostragem</figcaption>
+</figure>
+</section>
+<section id="taxa-de-amostragem" class="level1">
+<h1>Taxa de Amostragem</h1>
+<p>Qual a influência da taxa de amostragem?</p>
+<figure>
+<img src="assets/images/taxas-amostragem.png" />
+</figure>
+<div>
+<p>11025 KHz <audio data-src="assets/sounds/amenbreak-less.ogg" type="audio/ogg" controls="controls"></audio></p>
+</div>
+<div>
+44100 KHz <audio data-src="assets/sounds/amenbreak.ogg" type="audio/ogg" controls="controls"></audio>
+</div>
+</section>
+<section id="diferentes-ondas" class="level1">
+<h1>Diferentes Ondas</h1>
+<ul>
+<li>Seno, Triângulo, Quadrada, Dente de Serra, Pulso, ...</li>
+<li>... o resto!</li>
+</ul>
+<p><img src="assets/images/ondas1.png" /> <br> <img src="assets/images/ondas2.png" /></p>
+</section>
+<section id="arduino-due" class="level1">
+<h1>Arduino Due</h1>
+<ul>
+<li>Arduino Baseado no Atmel SAM3X8E ARM Cortex-M3 CPU</li>
+<li>32 bits, mais memória, mais processador</li>
+<li>Muito mais inputs e outputs</li>
+<li>DACs e ADCs</li>
+</ul>
+</section>
+<section id="pinagem-arduino-due" class="level1">
+<h1>Pinagem Arduino Due</h1>
+<p><a href="assets/images/due-pins.png"><img src="assets/images/due-pins.png" /></a></p>
+</section>
+<section id="demonstração-do-dac" class="level1">
+<h1>Demonstração do DAC</h1>
+<ul>
+<li><a href="https://gist.github.com/pklaus/5921022">https://gist.github.com/pklaus/5921022</a></li>
+</ul>
+</section>
+<section id="projeto-inspirador" class="level1">
+<h1>Projeto inspirador</h1>
+<iframe width="860" height="560" src="https://www.youtube.com/embed/COPaqJBekBQ" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+</section>
+<section id="circuito" class="level1">
+<h1>Circuito</h1>
+<figure>
+<img src="assets/images/circuito.jpg" />
+</figure>
+<ul>
+<li>Um amplificador baseado no Fetzer Valve com MPF102</li>
+<li><a href="http://www.runoffgroove.com/fetzervalve.html">http://www.runoffgroove.com/fetzervalve.html</a></li>
+</ul>
+</section>
+<section id="voltagem-e-pcm" class="level1">
+<h1>Voltagem e PCM</h1>
+<ul>
+<li>Amplificação e amostragem do sinal de guitarra</li>
+<li>Valores variando entre 900 e 1400</li>
+<li>Um pouco de ruído</li>
+<li>Porém temos o nosso som!</li>
+</ul>
+</section>
+<section id="código" class="level1">
+<h1>Código</h1>
+<figure>
+<img src="assets/images/code.jpg" />
+</figure>
+</section>
+<section id="demos" class="level1">
+<h1>Demos</h1>
+<ul>
+<li>Guitarra limpa</li>
+<li>Distorção</li>
+<li>Córus + Distorção</li>
+</ul>
+</section>
+<section id="dúvidas" class="level1">
+<h1>Dúvidas</h1>
+<figure>
+<img src="assets/images/duvidas.jpg" />
+</figure>
+</section>
+<section id="muito-obrigado" class="level1">
+<h1>Muito Obrigado</h1>
+<p>:)</p>
+</section>
+</div>
+
+<script src="revealjs/lib/js/head.min.js"></script>
+<script src="revealjs/js/reveal.js"></script>
+
+<script>
+  // Full list of configuration options available here:
+  // https://github.com/hakimel/reveal.js#configuration
+  Reveal.initialize({
+    controls: true,
+    progress: true,
+    history: true,
+    center: false,
+
+  // available themes are in /css/theme
+      theme: Reveal.getQueryHash().theme || 'beige', 
+  
+  // default/cube/page/concave/zoom/linear/fade/none
+      transition: Reveal.getQueryHash().transition || 'linear',
+  
+  // Optional libraries used to extend on reveal.js
+  dependencies: [
+    { src: 'revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+    { src: 'revealjs/plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+    { src: 'revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+    { src: 'revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+    { src: 'revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+    // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+  ]
+  });
+
+</script>
+
+</body>
+</html>
