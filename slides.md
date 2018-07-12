@@ -18,7 +18,7 @@ Quem sou?
 
 * Lucas Fialho Zawacki
 * Ciêntista da Computação, [Matehackers](https://matehackers.org), [Mconf](https://mconf.com)
-* [Musical Aritfacts](https://musical-artifacts.com), [Ownlife Project](https://ownlife.lfzawacki.com/)
+* [Musical Aritfacts](https://musical-artifacts.com), [Musica Libre](https://musica-libre.org/)
 
 O que queremos fazer aqui?
 =
@@ -148,6 +148,11 @@ Voltagem e PCM
 * Valores variando entre 900 e 1400
 * Um pouco de ruído
 * Porém temos o nosso som!
+
+Demonstração
+=
+
+<iframe width="860" height="560" src="https://www.youtube.com/watch?v=cPVq06V3TAY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 
 Código
 =
