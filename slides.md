@@ -129,8 +129,17 @@ Circuito
 
 ![](assets/images/circuito.jpg)
 
+Circuito v2
+=
+
+![](assets/images/circuito2.jpg)
+
+Circuito
+=
+
 * Um amplificador baseado no Fetzer Valve com MPF102
 * <http://www.runoffgroove.com/fetzervalve.html>
+* Potenciômetros e botões para controle
 
 Voltagem e PCM
 =
@@ -145,12 +154,14 @@ Código
 
 ![](assets/images/code.jpg)
 
-Demos
+Guitarra limpa
 =
 
-* Guitarra limpa
-* Distorção
-* Córus + Distorção
+Distorção
+=
+
+Delay
+=
 
 Dúvidas
 =
